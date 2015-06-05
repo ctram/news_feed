@@ -4,7 +4,12 @@ class Api::FeedsController < ApplicationController
   end
 
   def show
-    render :json => Feed.find(params[:id]) , include: :latest_entries
+    if (params[:force_reload])
+      render :json => Feed.find(params[:id]) , include: :instant_entries
+    else
+      render :json => Feed.find(params[:id]) , include: :latest_entries
+    end
+
   end
 
   def create
@@ -14,6 +19,10 @@ class Api::FeedsController < ApplicationController
     else
       render :json => { error: "invalid url" }, status: :unprocessable_entity
     end
+  end
+
+  def insta_show
+    render :json => Feed.find(params[:id]) , include: :instant_entries
   end
 
   private

@@ -5,5 +5,9 @@ NewsReader::Application.routes.draw do
     end
   end
 
+  namespace :api do
+    get '/feeds/:id/insta_refresh', to: 'feeds#insta_show'
+    
+  end
   root to: "static_pages#index"
 end
